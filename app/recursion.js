@@ -1,19 +1,25 @@
-exports = typeof window === 'undefined' ? global : window;
+exports = typeof window === "undefined" ? global : window;
 
 exports.recursionAnswers = {
-  listFiles: function(data, dirName) {
-
+  listFiles: function (data, dirName) {
+    if (dirName) {
+      if (data.dir === dirName) {
+        return this.listFiles(data);
+      }
+      return data.files.flatMap((file) => {
+        if (typeof file === "string") return [];
+        return this.listFiles(file, dirName);
+      });
+    }
+    return data.files.flatMap((file) => {
+      if (typeof file === "string") return file;
+      return this.listFiles(file);
+    });
   },
 
-  permute: function(arr) {
+  permute: function (arr) {},
 
-  },
+  fibonacci: function (n) {},
 
-  fibonacci: function(n) {
-
-  },
-
-  validParentheses: function(n) {
-
-  }
+  validParentheses: function (n) {}
 };
